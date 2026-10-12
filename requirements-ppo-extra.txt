@@ -1,0 +1,10 @@
+# Install after the project's requirements. On Windows, install swig and wheel
+# first, then install box2d-py with --no-build-isolation and Scripts on PATH.
+swig==4.5.1
+wheel==0.48.0
+box2d-py==2.3.8
+wandb==0.22.3
+matplotlib==3.11.2
+reportlab==5.0.1
+pypdf==6.20.0
+pypdfium2==5.14.0

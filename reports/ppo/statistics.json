@@ -1,0 +1,271 @@
+{
+  "runs": [
+    {
+      "id": "fr4d0uq8",
+      "config": "a2c_lunarlander",
+      "seed": 1,
+      "completed": true,
+      "step": 1999872,
+      "return100": -51.403987144554996,
+      "seconds": 515.0320486999699,
+      "SPS": 3893,
+      "losses/entropy": 0.80151,
+      "losses/explained_variance": 0.62001,
+      "losses/value_loss": 135.74345,
+      "eval": -34.87983946752037,
+      "group": "A2C",
+      "url": "https://wandb.ai/igor_mazo-federal-university-of-goi-s/ppo-assignment/runs/fr4d0uq8",
+      "label": "A2C s1 (fr4d0uq8)",
+      "num_updates": 7812,
+      "crossings": {
+        "0": {
+          "step": 217344,
+          "seconds": 56.15226979996078
+        },
+        "100": null,
+        "200": null
+      },
+      "max_drawdown": 179.82243430918035,
+      "peak_return": 61.318256431814554,
+      "lastquarter_min": -118.5041778773658,
+      "lastquarter_max": -21.084722798971697
+    },
+    {
+      "id": "pt52h35c",
+      "config": "a2c_lunarlander",
+      "seed": 2,
+      "completed": true,
+      "step": 1999872,
+      "return100": -93.49124121662902,
+      "seconds": 536.0380030000233,
+      "SPS": 3742,
+      "losses/entropy": 0.81706,
+      "losses/explained_variance": 0.71698,
+      "losses/value_loss": 66.68215,
+      "eval": -72.61822818681358,
+      "group": "A2C",
+      "url": "https://wandb.ai/igor_mazo-federal-university-of-goi-s/ppo-assignment/runs/pt52h35c",
+      "label": "A2C s2 (pt52h35c)",
+      "num_updates": 7812,
+      "crossings": {
+        "0": {
+          "step": 252672,
+          "seconds": 63.24270770000294
+        },
+        "100": null,
+        "200": null
+      },
+      "max_drawdown": 160.70991213013082,
+      "peak_return": 64.30838696079687,
+      "lastquarter_min": -96.40152516933395,
+      "lastquarter_max": -32.63333581113991
+    },
+    {
+      "id": "9lejwwgc",
+      "config": "ppo_lunarlander",
+      "seed": 1,
+      "completed": true,
+      "step": 999936,
+      "return100": -20.940996941034335,
+      "seconds": 479.16466810001293,
+      "SPS": 2091,
+      "losses/approx_kl": 1e-05,
+      "losses/clipfrac": 0.0,
+      "losses/entropy": 0.81508,
+      "losses/explained_variance": 0.62682,
+      "losses/value_loss": 67.83261,
+      "charts/epochs_run": 4,
+      "eval": 29.767773329722957,
+      "group": "Inicial",
+      "url": "https://wandb.ai/igor_mazo-federal-university-of-goi-s/ppo-assignment/runs/9lejwwgc",
+      "label": "Inicial s1 (9lejwwgc)",
+      "num_updates": 31248,
+      "crossings": {
+        "0": {
+          "step": 337920,
+          "seconds": 155.7608634000062
+        },
+        "100": null,
+        "200": null
+      },
+      "max_drawdown": 76.68364669926805,
+      "peak_return": 40.01573421655414,
+      "lastquarter_min": -36.667912482713916,
+      "lastquarter_max": 23.002949946905034
+    },
+    {
+      "id": "it98mxjn",
+      "config": "ppo_lunarlander",
+      "seed": 2,
+      "completed": true,
+      "step": 999936,
+      "return100": 26.523322552880405,
+      "seconds": 483.32449929998256,
+      "SPS": 2074,
+      "losses/approx_kl": 1e-05,
+      "losses/clipfrac": 0.0,
+      "losses/entropy": 0.7821,
+      "losses/explained_variance": 0.55986,
+      "losses/value_loss": 75.43105,
+      "charts/epochs_run": 4,
+      "eval": 20.414612462461697,
+      "group": "Inicial",
+      "url": "https://wandb.ai/igor_mazo-federal-university-of-goi-s/ppo-assignment/runs/it98mxjn",
+      "label": "Inicial s2 (it98mxjn)",
+      "num_updates": 31248,
+      "crossings": {
+        "0": {
+          "step": 347136,
+          "seconds": 175.17238250002265
+        },
+        "100": null,
+        "200": null
+      },
+      "max_drawdown": 65.81400333327102,
+      "peak_return": 79.4006800669023,
+      "lastquarter_min": 13.586676733631279,
+      "lastquarter_max": 79.4006800669023
+    },
+    {
+      "id": "bcmc5d1x",
+      "config": "ppo_lunarlander_final",
+      "seed": 1,
+      "completed": true,
+      "step": 1998848,
+      "return100": 272.10301770453776,
+      "seconds": 1015.1021251000348,
+      "SPS": 1984,
+      "losses/approx_kl": 0.00104,
+      "losses/clipfrac": 0.00291,
+      "losses/entropy": 0.57636,
+      "losses/explained_variance": 0.97571,
+      "losses/value_loss": 33.64597,
+      "charts/epochs_run": 10,
+      "eval": 274.3062448275746,
+      "group": "PPO",
+      "url": "https://wandb.ai/igor_mazo-federal-university-of-goi-s/ppo-assignment/runs/bcmc5d1x",
+      "label": "PPO s1 (bcmc5d1x)",
+      "num_updates": 78080,
+      "crossings": {
+        "0": {
+          "step": 106496,
+          "seconds": 67.29520729999058
+        },
+        "100": {
+          "step": 274432,
+          "seconds": 191.84939640003722
+        },
+        "200": {
+          "step": 360448,
+          "seconds": 247.316861600033
+        }
+      },
+      "max_drawdown": 45.99345677695396,
+      "peak_return": 279.6159923764754,
+      "lastquarter_min": 260.31168719017313,
+      "lastquarter_max": 279.6159923764754
+    },
+    {
+      "id": "iur5byix",
+      "config": "ppo_lunarlander_final",
+      "seed": 2,
+      "completed": true,
+      "step": 1998848,
+      "return100": 257.6464000306162,
+      "seconds": 1011.0637502999743,
+      "SPS": 1992,
+      "losses/approx_kl": 0.00112,
+      "losses/clipfrac": 0.00294,
+      "losses/entropy": 0.59886,
+      "losses/explained_variance": 0.92954,
+      "losses/value_loss": 99.93044,
+      "charts/epochs_run": 10,
+      "eval": 263.26128903809456,
+      "group": "PPO",
+      "url": "https://wandb.ai/igor_mazo-federal-university-of-goi-s/ppo-assignment/runs/iur5byix",
+      "label": "PPO s2 (iur5byix)",
+      "num_updates": 78080,
+      "crossings": {
+        "0": {
+          "step": 147456,
+          "seconds": 94.04869179998059
+        },
+        "100": {
+          "step": 299008,
+          "seconds": 205.00671280000824
+        },
+        "200": {
+          "step": 491520,
+          "seconds": 322.122592300002
+        }
+      },
+      "max_drawdown": 23.17899200524235,
+      "peak_return": 271.1015408365697,
+      "lastquarter_min": 247.93668265672892,
+      "lastquarter_max": 270.61818489761475
+    }
+  ],
+  "trials": [
+    {
+      "id": "hivjbi8g",
+      "config": "ppo_lunarlander_tuned",
+      "seed": 1,
+      "completed": true,
+      "step": 1999872,
+      "return100": 137.23,
+      "seconds": 1306.0,
+      "SPS": 1532,
+      "losses/approx_kl": 2e-05,
+      "losses/clipfrac": 0.0,
+      "losses/entropy": 0.54877,
+      "losses/explained_variance": 0.83902,
+      "losses/value_loss": 78.34941,
+      "charts/epochs_run": 10,
+      "eval": 183.10732698783232
+    },
+    {
+      "id": "i0c05afs",
+      "config": "ppo_lunarlander_tuned",
+      "seed": 2,
+      "completed": true,
+      "step": 1999872,
+      "return100": 33.89,
+      "seconds": 1461.1,
+      "SPS": 1369,
+      "losses/approx_kl": 6e-05,
+      "losses/clipfrac": 2e-05,
+      "losses/entropy": 0.66857,
+      "losses/explained_variance": 0.73803,
+      "losses/value_loss": 45.21058,
+      "charts/epochs_run": 10,
+      "eval": 73.72093241780966
+    }
+  ],
+  "common_time_seconds": 515.0320486999699,
+  "same_time": [
+    {
+      "id": "fr4d0uq8",
+      "group": "A2C",
+      "step": 1999872,
+      "return": -51.403987144554996
+    },
+    {
+      "id": "pt52h35c",
+      "group": "A2C",
+      "step": 1936896,
+      "return": -60.99689736777892
+    },
+    {
+      "id": "bcmc5d1x",
+      "group": "PPO",
+      "step": 856064,
+      "return": 255.5466452309602
+    },
+    {
+      "id": "iur5byix",
+      "group": "PPO",
+      "step": 860160,
+      "return": 246.05917815055992
+    }
+  ]
+}

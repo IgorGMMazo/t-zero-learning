@@ -122,7 +122,7 @@ def generate() -> str:
             "",
             f"## `{algo_name}:` section",
             "",
-            f"Defined in `{Path(module).relative_to(_ROOT)}::{section_cls.__name__}`. "
+            f"Defined in `{Path(module).relative_to(_ROOT).as_posix()}::{section_cls.__name__}`. "
             f"Default `network`: `{ArgsClass().network}`.",
             "",
             render_table(section_cls),
@@ -152,7 +152,7 @@ def main() -> None:
 
     content = generate()
     if cli.check:
-        current = OUTPUT.read_text() if OUTPUT.exists() else ""
+        current = OUTPUT.read_text(encoding="utf-8") if OUTPUT.exists() else ""
         if current != content:
             print(
                 f"{OUTPUT.relative_to(_ROOT)} is stale — run: "
@@ -162,7 +162,7 @@ def main() -> None:
         print(f"{OUTPUT.relative_to(_ROOT)} is up to date")
         return
 
-    OUTPUT.write_text(content)
+    OUTPUT.write_text(content, encoding="utf-8")
     print(f"wrote {OUTPUT.relative_to(_ROOT)}")
 
 

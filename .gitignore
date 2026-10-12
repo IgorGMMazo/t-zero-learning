@@ -209,6 +209,7 @@ __marimo__/
 
 runs/
 wandb/
+assignment_results/
 .cursor/
 .github/agents/
 logs/

@@ -1,0 +1,30 @@
+# Candidate 1: baseline diagnostics motivate more reuse and an unclipped critic.
+algorithm: ppo
+env_id: LunarLander-v3
+seed: 1
+cuda: false
+total_timesteps: 2000000
+num_envs: 4
+track: true
+capture_video: true
+save_model: true
+checkpoint_every: 0
+network: DiscreteActorCritic
+network_kwargs:
+  activation: Tanh
+  hidden_layers_size: 64
+ppo:
+  learning_rate: 0.00025
+  anneal_lr: true
+  num_steps: 128
+  gamma: 0.99
+  gae_lambda: 0.95
+  num_minibatches: 4
+  update_epochs: 10
+  norm_adv: true
+  clip_coef: 0.2
+  clip_vloss: false
+  ent_coef: 0.01
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  target_kl: null

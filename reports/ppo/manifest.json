@@ -1,0 +1,69 @@
+{
+  "python": "3.11.9",
+  "os": "Windows-10-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 198 Stepping 2, GenuineIntel",
+  "versions": {
+    "torch": "2.9.1+cpu",
+    "gymnasium": "1.2.0",
+    "Box2D": "2.3.8",
+    "wandb": "0.22.3"
+  },
+  "source_sha256": {
+    "algorithms/ppo.py": "7c76765283b3abdf1ec4b7ecf58a5f89ae2d4994fc17be457cf9421c1f6b9391",
+    "algorithms/a2c.py": "5e4d48d275ef65c911289f582ed2e510df746c1843e96e6905eab9efcfab149e",
+    "networks/discrete_actor_critic.py": "bb0ea9aa45b9de477aa9ce4b08e18b073f42f5504b7e652a2a376acaa0e13b96"
+  },
+  "upstream_commit": "8ce725bf593554d246d4f3fc7430f3323f622eae",
+  "runs": [
+    {
+      "id": "9lejwwgc",
+      "url": "https://wandb.ai/igor_mazo-federal-university-of-goi-s/ppo-assignment/runs/9lejwwgc",
+      "config": "ppo_lunarlander",
+      "seed": 1
+    },
+    {
+      "id": "bcmc5d1x",
+      "url": "https://wandb.ai/igor_mazo-federal-university-of-goi-s/ppo-assignment/runs/bcmc5d1x",
+      "config": "ppo_lunarlander_final",
+      "seed": 1
+    },
+    {
+      "id": "fr4d0uq8",
+      "url": "https://wandb.ai/igor_mazo-federal-university-of-goi-s/ppo-assignment/runs/fr4d0uq8",
+      "config": "a2c_lunarlander",
+      "seed": 1
+    },
+    {
+      "id": "hivjbi8g",
+      "url": "https://wandb.ai/igor_mazo-federal-university-of-goi-s/ppo-assignment/runs/hivjbi8g",
+      "config": "ppo_lunarlander_tuned",
+      "seed": 1
+    },
+    {
+      "id": "i0c05afs",
+      "url": "https://wandb.ai/igor_mazo-federal-university-of-goi-s/ppo-assignment/runs/i0c05afs",
+      "config": "ppo_lunarlander_tuned",
+      "seed": 2
+    },
+    {
+      "id": "it98mxjn",
+      "url": "https://wandb.ai/igor_mazo-federal-university-of-goi-s/ppo-assignment/runs/it98mxjn",
+      "config": "ppo_lunarlander",
+      "seed": 2
+    },
+    {
+      "id": "iur5byix",
+      "url": "https://wandb.ai/igor_mazo-federal-university-of-goi-s/ppo-assignment/runs/iur5byix",
+      "config": "ppo_lunarlander_final",
+      "seed": 2
+    },
+    {
+      "id": "pt52h35c",
+      "url": "https://wandb.ai/igor_mazo-federal-university-of-goi-s/ppo-assignment/runs/pt52h35c",
+      "config": "a2c_lunarlander",
+      "seed": 2
+    }
+  ],
+  "excluded_infrastructure_failure": "09uq3wmc (local JSON serialization error before any metric; rerun from scratch)",
+  "timing_note": "Runs overlapped; one PyTorch/OpenMP/MKL thread per trainer, AsyncVectorEnv workers. Times are not isolated CPU benchmarks."
+}

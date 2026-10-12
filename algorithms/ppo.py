@@ -145,7 +145,15 @@ def compute_gae(
         advantages + values`` (the critic's regression target).
     """
     # ===================== YOUR CODE HERE (Part 1) =====================
-    raise NotImplementedError("Implement compute_gae")
+    advantages = torch.zeros_like(rewards)
+    last_advantage = torch.zeros_like(next_value)
+    for t in reversed(range(rewards.shape[0])):
+        nonterminal = 1.0 - (next_done if t == rewards.shape[0] - 1 else dones[t + 1])
+        following_value = next_value if t == rewards.shape[0] - 1 else values[t + 1]
+        delta = rewards[t] + gamma * nonterminal * following_value - values[t]
+        last_advantage = delta + gamma * gae_lambda * nonterminal * last_advantage
+        advantages[t] = last_advantage
+    return advantages, advantages + values
     # ===================================================================
 
 
@@ -162,7 +170,11 @@ def compute_clipped_policy_loss(
     objective.
     """
     # ===================== YOUR CODE HERE (Part 2) =====================
-    raise NotImplementedError("Implement compute_clipped_policy_loss")
+    ratio = (newlogprob - oldlogprob.detach()).exp()
+    weights = advantages.detach()
+    return -torch.minimum(
+        ratio * weights, ratio.clamp(1.0 - clip_coef, 1.0 + clip_coef) * weights
+    ).mean()
     # ===================================================================
 
 
@@ -177,7 +189,12 @@ def approx_kl_and_clipfrac(
     ``clipfrac`` is the fraction of samples with ``|ratio - 1| > clip_coef``.
     """
     # ===================== YOUR CODE HERE (Part 3) =====================
-    raise NotImplementedError("Implement approx_kl_and_clipfrac")
+    with torch.no_grad():
+        logratio = newlogprob - oldlogprob
+        ratio = logratio.exp()
+        approx_kl = ((ratio - 1.0) - logratio).mean()
+        clipfrac = ((ratio - 1.0).abs() > clip_coef).float().mean()
+    return approx_kl, clipfrac
     # ===================================================================
 
 

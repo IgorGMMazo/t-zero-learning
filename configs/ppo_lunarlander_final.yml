@@ -1,0 +1,30 @@
+# Candidate 2: longer-horizon and larger-rollout experiment after candidate 1 instability.
+algorithm: ppo
+env_id: LunarLander-v3
+seed: 1
+cuda: false
+total_timesteps: 2000000
+num_envs: 4
+track: true
+capture_video: true
+save_model: true
+checkpoint_every: 0
+network: DiscreteActorCritic
+network_kwargs:
+  activation: Tanh
+  hidden_layers_size: 64
+ppo:
+  learning_rate: 0.00025
+  anneal_lr: true
+  num_steps: 1024
+  gamma: 0.999
+  gae_lambda: 0.98
+  num_minibatches: 16
+  update_epochs: 10
+  norm_adv: true
+  clip_coef: 0.2
+  clip_vloss: false
+  ent_coef: 0.001
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  target_kl: null
