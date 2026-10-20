@@ -25,14 +25,38 @@ For Linux headless MuJoCo video, set `MUJOCO_GL=egl`.
 
 Experiment evidence is in `results/`: candidate rationales, predictions
 written before ablations/comparison, environment versions, seed summaries,
-and exported W&B histories. The final report is generated with
+and exported W&B histories. `scripts/export_assignment.py` reads complete
+local W&B event files without sampling; `--remote` downloads through the
+W&B API instead. Only finished runs with final evaluations are exported
+by the local reader. The final report is generated with
 `python scripts/build_report.py` once all required completed runs and
 `results/conclusions.json` are present. It refuses incomplete experiment
-groups and PDFs exceeding four pages.
+groups and PDFs exceeding four pages. Install the report dependencies with
+`python -m pip install -r requirements-sac-report.txt`.
 
 The supplied PPO command configures 100,000 steps but the unchanged PPO
 loop runs 24 full rollouts of 4,096 steps (98,304 actual steps). The report
 must disclose this difference. SAC runs exactly 100,000 loop steps.
+
+`python scripts/complete_experiments.py` waits for the twelve Part 3 runs
+started by the runner, applies the recorded conservative selection rule,
+writes the Part 4 predictions and configs, runs both ablations with two
+seeds, and exports the completed evidence. It stops on a failed run.
+It does not synthesize conclusions or invent missing results.
+
+To rebuild the submitted report from the public experiment project:
+
+```powershell
+python scripts/export_assignment.py --remote --finished-only
+python scripts/analyze_assignment.py
+python scripts/diagnostics.py
+python scripts/validate_assignment.py
+python scripts/build_report.py
+```
+
+The final PDF and figures are in `output/pdf/`. Full histories and training
+logs stay local; compact summaries, predictions, and configuration evidence
+are versioned in `results/`.
 
 A readable starting point for reinforcement-learning research, built on
 [CleanRL](https://github.com/vwxyzjn/cleanrl)'s single-file implementations.

@@ -1,4 +1,9 @@
 {
   "recorded_at": "2026-10-20T12:11:39.062395+00:00",
-  "part5": "Espero que o SAC alcance maior retorno por passo, pois reutiliza o replay muitas vezes e aprende uma política estocástica por gradientes através das ações. Espero que o PPO processe mais passos por segundo, pois intercala rollouts longos com otimização em lotes; com updates_per_step=2 o SAC tende a custar ainda mais tempo. A diferença de retorno entre seeds pode impedir uma conclusão robusta."
+  "part5": "Espero que o SAC alcance maior retorno por passo, pois reutiliza o replay muitas vezes e aprende uma política estocástica por gradientes através das ações. Espero que o PPO processe mais passos por segundo, pois intercala rollouts longos com otimização em lotes; com updates_per_step=2 o SAC tende a custar ainda mais tempo. A diferença de retorno entre seeds pode impedir uma conclusão robusta.",
+  "part4_recorded_at": "2026-10-20T13:58:18.725314+00:00",
+  "part4_reference": "sac_hopper_utd2",
+  "alpha_choice": "Alfa fixo 0.0771: mediana das medianas de losses/alpha dos três seeds entre 80.000 e 100.000 passos, arredondada a três algarismos significativos.",
+  "part4_alpha": "Com alfa fixo 0.0771, escolhido no regime final da referência, espero menos regularização inicial do que no autotune, que começa em 1. Isso pode acelerar a adoção de ações já valorizadas, mas reduzir a diversidade e aumentar a variação entre seeds. A entropia pode se afastar do alvo -3 porque não há realimentação ajustando a temperatura; não prevejo melhora robusta de retorno.",
+  "part4_q": "Ao usar apenas Q1 no alvo e na perda do ator, espero maior superestimação: Q - retorno soft tende a ficar mais positivo e Q1 pode crescer sem ganho proporcional no retorno. Espero maior instabilidade entre seeds e possível piora na avaliação, pois o ator pode explorar erros otimistas do crítico."
 }

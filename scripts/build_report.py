@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 import sys
+import statistics
 
 import matplotlib
 matplotlib.use("Agg")
@@ -23,6 +24,8 @@ COLORS = ["#2563eb", "#ea580c"]
 
 def main():
     conclusions = json.loads((ROOT / "results" / "conclusions.json").read_text(encoding="utf-8"))
+    if any("PENDENTE" in str(value) for value in conclusions.values()):
+        raise ValueError("Finish interpreting all experiments before generating the report.")
     aggregates = json.loads((ROOT / "results" / "aggregates.json").read_text(encoding="utf-8"))
     rationale = json.loads((ROOT / "results" / "candidate_rationale.json").read_text(encoding="utf-8"))
     runs = {}
@@ -44,8 +47,11 @@ def main():
                          "axes.spines.right": False, "figure.dpi": 160})
 
     def figure(filename, configs, keys, labels, time_axis=False, nseeds=None):
+        if time_axis and len(keys) == 1:
+            keys = keys * 2
+            labels = labels * 2
         fig, axes = plt.subplots(1, len(keys), figsize=(7.1, 2.25), squeeze=False)
-        for ax, key, label in zip(axes[0], keys, labels):
+        for panel, (ax, key, label) in enumerate(zip(axes[0], keys, labels)):
             for j, config in enumerate(configs):
                 group = runs[config][:nseeds] if nseeds else runs[config]
                 for i, run in enumerate(group):
@@ -55,15 +61,35 @@ def main():
                     if not pairs:
                         raise ValueError(f"No history: {run['id']} {key}")
                     x, y = map(np.asarray, zip(*pairs))
+                    if time_axis:
+                        y = y.astype(float)
+                        y[1:][np.diff(x) > 60] = np.nan
                     # Unsmoothed histories preserve the seed-level variability.
                     ax.plot(x / (60 if time_axis else 1000), y, color=COLORS[j],
                             linewidth=.85, alpha=.78, linestyle=["-", "--", ":"][i],
                             label=f"{conclusions['labels'][config]} s{run['config']['seed']}")
             if key == "losses/entropy":
                 ax.axhline(-3, color="#555555", linestyle=":", linewidth=1, label="Alvo = -3")
+                ax.text(.98, -3, "alvo -3", transform=ax.get_yaxis_transform(),
+                        ha="right", va="bottom", fontsize=6)
             if key == "charts/q_minus_return":
                 ax.axhline(0, color="#777777", linewidth=.6)
             ax.set(xlabel="Tempo (min)" if time_axis else "Passos (mil)", ylabel=label)
+            if time_axis and panel == 1:
+                common_end = min(
+                    max(r["_runtime"] for r in run["history"] if key in r) / 60
+                    for run in runs[configs[1]][:nseeds]
+                )
+                ax.set_xlim(0, common_end)
+                common_values = [
+                    r[key] for config in configs for run in runs[config][:nseeds]
+                    for r in run["history"]
+                    if key in r and r.get("_runtime", float("inf")) <= common_end * 60
+                ]
+                ax.set_ylim(min(0, min(common_values)), max(common_values) * 1.1)
+                ax.set_title("Janela comum: até o fim do PPO", fontsize=8)
+            elif time_axis:
+                ax.set_title("Tempo total registrado", fontsize=8)
             ax.grid(alpha=.15)
         axes[0][0].legend(fontsize=6, loc="best")
         fig.tight_layout(pad=.8)
@@ -73,7 +99,7 @@ def main():
         return path
 
     p3 = figure("eficiencia.png", ["sac_hopper", competitor],
-                ["charts/episodic_return_mean_last100"], ["Retorno médio (últimos 100 episódios)"])
+                ["charts/episodic_return_mean_last100"], ["Retorno (últimos 100)"])
     p4a = figure("temperatura.png", [final, "sac_hopper_fixed_alpha"],
                 ["losses/alpha", "losses/entropy", "charts/episodic_return_mean_last100"],
                 ["Temperatura", "Entropia estimada", "Retorno (últimos 100)"], nseeds=2)
@@ -81,9 +107,9 @@ def main():
                 ["charts/q_minus_return", "losses/qf1_values", "charts/episodic_return_mean_last100"],
                 ["Q - retorno soft", "Q1 médio", "Retorno (últimos 100)"], nseeds=2)
     p5a = figure("sac_ppo_passos.png", [final, "ppo_pendulum"],
-                ["charts/episodic_return_mean_last100"], ["Retorno médio (últimos 100 episódios)"], nseeds=2)
+                ["charts/episodic_return_mean_last100"], ["Retorno (últimos 100)"], nseeds=2)
     p5b = figure("sac_ppo_tempo.png", [final, "ppo_pendulum"],
-                ["charts/episodic_return_mean_last100"], ["Retorno médio (últimos 100 episódios)"],
+                ["charts/episodic_return_mean_last100"], ["Retorno (últimos 100)"],
                 time_axis=True, nseeds=2)
     styles = getSampleStyleSheet()
     styles.add(ParagraphStyle(name="BodySmall", fontName="Helvetica", fontSize=9,
@@ -106,7 +132,10 @@ def main():
         group = runs[config][:count] if count else runs[config]
         return ", ".join(f'<a href="{r["url"]}" color="#2563eb">{r["id"]}</a> (s{r["config"]["seed"]})' for r in group)
 
-    def stats(config, key):
+    def stats(config, key, count=None):
+        if count:
+            values = [r["summary"][key] for r in runs[config][:count]]
+            return f"{statistics.mean(values):.1f} ({min(values):.1f} a {max(values):.1f})"
         s = aggregates[config][key]
         return f'{s["mean"]:.1f} ({s["min"]:.1f} a {s["max"]:.1f})'
 
@@ -149,10 +178,12 @@ def main():
     pic(p4a)
     p(f'Referência: {ids(final, 2)}. Alfa fixo: {ids("sac_hopper_fixed_alpha")}.', "CaptionSmall")
     p("<b>Resultado e mecanismo.</b> " + conclusions["alpha_result"])
-    p(f'Avaliação determinística: referência {stats(final, METRIC_EVAL)} (3 seeds da Parte 3); '
+    p(f'Avaliação determinística: referência {stats(final, METRIC_EVAL, 2)} (seeds 1 e 2); '
       f'alfa fixo {stats("sac_hopper_fixed_alpha", METRIC_EVAL)} (2 seeds). '
       "As curvas sobrepõem apenas seeds 1 e 2 de cada configuração.")
     p("<b>Leitura conjunta.</b> " + conclusions["alpha_joint"])
+    p("A entropia de uma densidade contínua pode ser negativa. Aqui, o alvo -3 corresponde "
+      "às três dimensões da ação; a comparação usa a log-probabilidade corrigida pelo tanh.", "CaptionSmall")
     p("Referência técnica: " + conclusions["alpha_lines"])
     story.append(PageBreak())
     p("Parte 4 - Um crítico no alvo e ator", "Title")
@@ -160,6 +191,9 @@ def main():
     pic(p4b)
     p(f'Referência: {ids(final, 2)}. Q1: {ids("sac_hopper_single_q")}.', "CaptionSmall")
     p("<b>Resultado e mecanismo.</b> " + conclusions["q_result"])
+    p("Nesta implementação, clipped_double_q=false substitui o mínimo por Q1 no alvo e no ator. "
+      "Q2 continua sendo calculado e treinado; a ablação testa o uso do mínimo, não a economia "
+      "computacional de remover uma rede.")
     p(f'Avaliação determinística: configuração com Q1 {stats("sac_hopper_single_q", METRIC_EVAL)}. '
       "Os valores Q incluem desconto e entropia; não devem ser comparados diretamente com o retorno bruto.")
     p("Referência técnica: " + conclusions["q_lines"])
@@ -173,9 +207,12 @@ def main():
     pic(p5a)
     pic(p5b)
     p(f'SAC: {ids(final, 2)}. PPO: {ids("ppo_pendulum")}. Tempo: campo _runtime do W&amp;B, em minutos; '
-      "inclui a inicialização do run. Treinos concorrentes nesta máquina tornam o tempo uma medida desta execução.",
+      "inclui a inicialização. Há duas lacunas de cerca de 34,5 e 14,7 min nos runs SAC; "
+      "as linhas são interrompidas nas lacunas. O painel direito amplia a janela comum antes delas.",
       "CaptionSmall")
     p(conclusions["ppo_result"])
+    p("A avaliação final original do PPO amostra ações. Para comparar desempenho ao longo do treino, "
+      "as figuras usam a mesma métrica de retorno episódico nos dois algoritmos.", "CaptionSmall")
     p("<b>Reutilização das amostras.</b> " + conclusions["reuse"])
     p("<b>Orçamento efetivo.</b> O comando do enunciado configura 100.000 passos nos dois algoritmos. "
       "O PPO original fecha 24 rollouts de 4.096 transições: 98.304 passos, 1,696% abaixo do teto. "

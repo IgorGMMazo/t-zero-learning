@@ -1,0 +1,30 @@
+{
+  "final_config": "sac_hopper_utd2",
+  "comparison_config": "sac_hopper_utd2",
+  "verdicts": {
+    "sac_hopper_early": "indistinguível do ruído",
+    "sac_hopper_slow_q": "indistinguível do ruído",
+    "sac_hopper_utd2": "melhora"
+  },
+  "author": "Igor Garbin Manzan Mazo e Christian de Souza Ramos",
+  "fork_url": "https://github.com/IgorGMMazo/t-zero-learning/tree/codex/sac-assignment",
+  "labels": {
+    "sac_hopper": "Inicial",
+    "sac_hopper_utd2": "SAC UTD2",
+    "sac_hopper_fixed_alpha": "Alfa fixo",
+    "sac_hopper_single_q": "Só Q1",
+    "ppo_pendulum": "PPO"
+  },
+  "selection": "O candidato updates_per_step=2 foi selecionado: até seu pior seed (2.625,2) superou o melhor inicial (1.851,4). Seu retorno de treino também não se sobrepõe ao inicial. Antecipar o aprendizado e reduzir q_lr produziram amplitudes grandes; não há evidência de melhora robusta nesses candidatos. O critério conservador de não sobreposição foi registrado antes da seleção.",
+  "alpha_prediction": "Com alfa fixo 0.0771, escolhido no regime final da referência, espero menos regularização inicial do que no autotune, que começa em 1. Isso pode acelerar a adoção de ações já valorizadas, mas reduzir a diversidade e aumentar a variação entre seeds. A entropia pode se afastar do alvo -3 porque não há realimentação ajustando a temperatura; não prevejo melhora robusta de retorno.",
+  "alpha_choice": "Alfa fixo 0.0771: mediana das medianas de losses/alpha dos três seeds entre 80.000 e 100.000 passos, arredondada a três algarismos significativos. As medianas por seed foram 0,0790, 0,0771 e 0,0656.",
+  "alpha_result": "A previsão se confirmou parcialmente: a avaliação com alfa fixo variou de 1.214,5 a 3.190,2, contra 2.625,2 a 2.721,2 na referência (mesmos seeds 1 e 2); não houve melhora consistente na avaliação. Já o retorno de treino final foi maior nos dois seeds: 1.380,4 e 1.625,4, contra 1.219,5 e 1.355,5. Portanto, a maior variabilidade prevista aparece na avaliação, mas não autoriza dizer que a ablação simplesmente piorou toda a aprendizagem.",
+  "alpha_joint": "Entre 80 e 100 mil passos, as medianas de entropia foram -2,60 e -3,44 com alfa fixo, contra -2,98 e -2,97 com autotune. O valor fixo escolhido no fim do treino não reproduz a trajetória da temperatura desde o início, e não corrige desvios em relação ao alvo. Alfa constante, entropias divergentes e avaliações distintas sustentam essa leitura conjunta; um retorno de treino maior não garantiu uma política média melhor nos dois seeds.",
+  "alpha_lines": "algorithms/sac.py:341 inicia a temperatura; 489-497 ajustam log_alpha apenas quando autotune=true; 179 e 483 ligam a temperatura ao alvo soft e à perda do ator. A amostra reparametrizada está na linha 147 e a correção do tanh na 150.",
+  "q_prediction": "Ao usar apenas Q1 no alvo e na perda do ator, espero maior superestimação: Q - retorno soft tende a ficar mais positivo e Q1 pode crescer sem ganho proporcional no retorno. Espero maior instabilidade entre seeds e possível piora na avaliação, pois o ator pode explorar erros otimistas do crítico.",
+  "q_result": "A previsão se confirmou nestes runs: entre 80 e 100 mil passos, a mediana de Q - retorno soft foi +1.260,1 e +529,6 usando Q1, contra +5,6 e -6,9 na referência. As medianas de Q1 também subiram para 1.230,4 e 592,8 (referência: 214,8 e 226,8), enquanto os retornos de treino finais caíram para 510,3 e 592,1. As avaliações ficaram em 524,0 e 2.101,9, ambas abaixo das referências de mesmo seed; a amplitude também aumentou. Assim, valores Q maiores refletiram otimismo sem ganho de retorno: retirar o mínimo permite que o alvo e o ator aproveitem erros positivos de Q1.",
+  "q_lines": "algorithms/sac.py:367 seleciona Q1 quando clipped_double_q=false; 455-458 aplicam essa escolha ao alvo e 483 à perda do ator. O mínimo do alvo está na linha 179.",
+  "ppo_prediction": "Espero que o SAC alcance maior retorno por passo, pois reutiliza o replay muitas vezes e aprende uma política estocástica por gradientes através das ações. Espero que o PPO processe mais passos por segundo, pois intercala rollouts longos com otimização em lotes; com updates_per_step=2 o SAC tende a custar ainda mais tempo. A diferença de retorno entre seeds pode impedir uma conclusão robusta.",
+  "ppo_result": "A previsão se confirmou nestes runs: ao final, o SAC teve retorno de treino 1.287,5 (1.219,5-1.355,5), contra 348,4 (336,0-360,8) do PPO. Até cerca de 74 s, porém, o SAC estava em 6.401 passos e retorno 32,8-37,6, enquanto o PPO já estava perto de terminar. Nesse trecho, SPS era 95-96 no SAC contra aproximadamente 1.440 no PPO. O tempo total do SAC inclui duas grandes lacunas e não mede custo isolado de execução.",
+  "reuse": "No último registro, SAC fez 189.800 atualizações Q: 189.800 x 256 / aproximadamente 99.300 transições armazenadas = cerca de 489 participações em minibatches por transição; amostras antigas tendem a aparecer mais. O ator também reutiliza esses estados, com duas atualizações a cada duas atualizações Q (sac.py:479-480). PPO fez 7.680 atualizações: 10 épocas por rollout, portanto 10 usos por transição. Dobrar updates_per_step dobra a intensidade de reutilização e aumenta o custo por passo. Replay (sac.py:448), bônus de entropia (179), mínimo dos críticos (179/483) e gradiente através da ação (147) ajudam a explicar o ganho amostral; os contadores Q e PPO não representam operações idênticas."
+}

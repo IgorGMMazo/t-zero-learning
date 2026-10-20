@@ -222,5 +222,6 @@ docs/plans
 # Local SAC training output; compact evidence and the PDF remain versioned.
 results/*.log
 results/*.status.json
+results/*.png
 results/histories/
 tmp/

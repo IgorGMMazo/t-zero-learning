@@ -14,5 +14,14 @@
     "passed": 16,
     "failed": 20,
     "reason": "test_ppo.py targets the discrete PPO/A2C assignment blanks left unfinished in the instructor repository. The SAC task uses the separate complete ppo_continuous_action.py. Both continuous PPO runs completed successfully. No unrelated assignment code was modified."
+  },
+  "report": {
+    "pages": 4,
+    "visual_review": "All four final rendered pages inspected; no clipping or encoding defects.",
+    "hyperlinks": 20
+  },
+  "experiment_coverage": {
+    "completed_runs": 19,
+    "configs_and_seeds_match": true
   }
 }

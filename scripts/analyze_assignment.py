@@ -28,9 +28,10 @@ def main():
         group[seed] = run
     result = {}
     for name, seeds in sorted(groups.items()):
-        result[name] = {"seeds": sorted(seeds), "runs": [r["id"] for r in seeds.values()]}
+        ordered_runs = [seeds[seed] for seed in sorted(seeds)]
+        result[name] = {"seeds": sorted(seeds), "runs": [r["id"] for r in ordered_runs]}
         for key in METRICS:
-            values = [metric(r, key) for r in seeds.values()]
+            values = [metric(r, key) for r in ordered_runs]
             if any(v is None for v in values):
                 raise ValueError(f"Missing {key}: {name}")
             result[name][key] = {"mean": statistics.mean(values), "min": min(values),

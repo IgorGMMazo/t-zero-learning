@@ -1,0 +1,34 @@
+{
+  "final_config": "sac_hopper_utd2",
+  "comparison_config": "sac_hopper_utd2",
+  "verdicts": {
+    "sac_hopper_early": "indistinguível do ruído",
+    "sac_hopper_slow_q": "indistinguível do ruído",
+    "sac_hopper_utd2": "melhora"
+  },
+  "fixed_alpha": 0.0771,
+  "late_alpha_by_seed": [
+    {
+      "run": "a6kc83xb",
+      "seed": 3,
+      "median": 0.06560660526156425,
+      "min": 0.056473467499017715,
+      "max": 0.07791267335414886
+    },
+    {
+      "run": "ehumli2v",
+      "seed": 1,
+      "median": 0.0790284313261509,
+      "min": 0.06834696233272552,
+      "max": 0.08912353962659836
+    },
+    {
+      "run": "s5x1j5ij",
+      "seed": 2,
+      "median": 0.07709027826786041,
+      "min": 0.06972009688615799,
+      "max": 0.08337774872779846
+    }
+  ],
+  "selected_at": "2026-10-20T13:58:18.708448+00:00"
+}
