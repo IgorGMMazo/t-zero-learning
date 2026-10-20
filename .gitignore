@@ -218,3 +218,9 @@ algorithms/dqn_solution.py
 *_solution.py
 
 docs/plans
+
+# Local SAC training output; compact evidence and the PDF remain versioned.
+results/*.log
+results/*.status.json
+results/histories/
+tmp/

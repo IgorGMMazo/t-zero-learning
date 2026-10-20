@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-10-20T12:17:38.259767+00:00",
+  "selection_rule": "Regra conservadora: melhora se mínimo de eval/mean_return do candidato excede máximo da referência; piora se máximo do candidato é menor que mínimo da referência; demais casos indistinguíveis do ruído. Entre melhorias escolher maior média; sem melhoria manter referência. Amplitude de três seeds não é intervalo de confiança nem teste formal.",
+  "training_metric": "Retorno last100 reportado em separado, nunca usado como substituto da avaliação determinística.",
+  "curve_metric": "charts/episodic_return_mean_last100, sem suavização adicional.",
+  "ablation_reference": "Seeds 1 e 2 do config final; terceiro seed apenas para resumo da Parte 3.",
+  "timing_caveat": "Treinos concorrentes; tempo medido nesta máquina, sem inferência de benchmark de hardware."
+}

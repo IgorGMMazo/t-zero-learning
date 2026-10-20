@@ -1,0 +1,4 @@
+{
+  "recorded_at": "2026-10-20T12:11:39.062395+00:00",
+  "part5": "Espero que o SAC alcance maior retorno por passo, pois reutiliza o replay muitas vezes e aprende uma política estocástica por gradientes através das ações. Espero que o PPO processe mais passos por segundo, pois intercala rollouts longos com otimização em lotes; com updates_per_step=2 o SAC tende a custar ainda mais tempo. A diferença de retorno entre seeds pode impedir uma conclusão robusta."
+}

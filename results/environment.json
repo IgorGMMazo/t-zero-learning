@@ -1,0 +1,14 @@
+{
+  "python": "3.11.9",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "packages": {
+    "torch": "2.9.1",
+    "gymnasium": "1.2.0",
+    "mujoco": "3.3.0",
+    "numpy": "2.2.6",
+    "wandb": "0.22.3",
+    "pytest": "9.1.1"
+  },
+  "upstream_commit": "f5158cb629cfe4366927383adc99d1ab403a32b5",
+  "threads_per_run": 1
+}

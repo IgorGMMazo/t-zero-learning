@@ -1,5 +1,39 @@
 # t-zero
 
+## SAC assignment
+
+The SAC solution is on branch `codex/sac-assignment`. The original course
+implementation is preserved except for the two requested SAC functions and
+a `train.py` fix that prints SAC's separate actor and critic learning rates.
+
+```powershell
+python -m pytest tests/test_sac.py
+python scripts/run_assignment.py sac_pendulum --seeds 1
+python scripts/run_assignment.py sac_hopper
+python scripts/run_assignment.py sac_hopper_early
+python scripts/run_assignment.py sac_hopper_slow_q
+python scripts/run_assignment.py sac_hopper_utd2
+python scripts/run_assignment.py ppo_pendulum --seeds 1 2 --override env_id=Hopper-v5 total_timesteps=100000 ppo_continuous_action.gamma=0.99 track=true
+```
+
+Set your own W&B credentials in `.env` and `WANDB_PROJECT=sac-assignment`.
+The runner sets one CPU thread per process and uses UTF-8 logs on Windows.
+For this local workspace it can also read credentials from the sibling
+`t-zero-learning/.env`; credentials are never included in the report or Git.
+The original `python train.py --config ...` entry point remains usable.
+For Linux headless MuJoCo video, set `MUJOCO_GL=egl`.
+
+Experiment evidence is in `results/`: candidate rationales, predictions
+written before ablations/comparison, environment versions, seed summaries,
+and exported W&B histories. The final report is generated with
+`python scripts/build_report.py` once all required completed runs and
+`results/conclusions.json` are present. It refuses incomplete experiment
+groups and PDFs exceeding four pages.
+
+The supplied PPO command configures 100,000 steps but the unchanged PPO
+loop runs 24 full rollouts of 4,096 steps (98,304 actual steps). The report
+must disclose this difference. SAC runs exactly 100,000 loop steps.
+
 A readable starting point for reinforcement-learning research, built on
 [CleanRL](https://github.com/vwxyzjn/cleanrl)'s single-file implementations.
 

@@ -1,0 +1,28 @@
+algorithm: sac
+env_id: Hopper-v5
+seed: 1
+cuda: false
+total_timesteps: 100000
+num_envs: 1
+track: true
+capture_video: true
+save_model: true
+checkpoint_every: 25000
+network: SACAgent
+network_kwargs:
+  activation: ReLU
+  hidden_layers_size: 256
+sac:
+  buffer_size: 1000000
+  gamma: 0.99
+  tau: 0.005
+  batch_size: 256
+  learning_starts: 5000
+  policy_lr: 0.0003
+  q_lr: 0.0003
+  policy_frequency: 2
+  target_network_frequency: 1
+  alpha: 0.2
+  autotune: true
+  updates_per_step: 1
+  clipped_double_q: true

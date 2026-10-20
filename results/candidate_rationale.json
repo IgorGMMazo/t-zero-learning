@@ -1,0 +1,23 @@
+[
+  {
+    "config": "sac_hopper_early",
+    "key": "sac.learning_starts",
+    "old": 5000,
+    "new": 1000,
+    "reason": "No run t36lm0u3, em 9201 passos, retorno last100=74.28: testar aprendizado mais cedo para aproveitar o orçamento curto."
+  },
+  {
+    "config": "sac_hopper_slow_q",
+    "key": "sac.q_lr",
+    "old": 0.001,
+    "new": 0.0003,
+    "reason": "No run t36lm0u3, alpha caiu de 1 para 0.121 em 9201 passos; q_lr controla também a temperatura: testar adaptação mais lenta."
+  },
+  {
+    "config": "sac_hopper_utd2",
+    "key": "sac.updates_per_step",
+    "old": 1,
+    "new": 2,
+    "reason": "No run 26ut4s0r, em 8101 passos, retorno last100=65.57: testar maior reutilização das transições por passo de ambiente."
+  }
+]
